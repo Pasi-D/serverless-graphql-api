@@ -1,0 +1,19 @@
+{
+    "env": {
+        "node": true
+    },
+    "root": true,
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["@typescript-eslint", "prettier"],
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended",
+        "prettier"
+    ],
+    "parserOptions": { "ecmaVersion": "latest", "sourceType": "module", "project": "./tsconfig.json"  },
+    "rules": {
+        "prettier/prettier": ["error", {}, { "usePrettierrc": true }], // Use our .prettierrc file as source
+        "semi-spacing": ["error", { "before": false, "after": true }]
+    }
+}

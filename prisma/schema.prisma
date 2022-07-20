@@ -1,0 +1,42 @@
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-1.0.x"]
+  previewFeatures = ["referentialIntegrity"]
+}
+
+generator pothos {
+  provider = "prisma-pothos-types"
+  clientOutput = "@prisma/client"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+  referentialIntegrity = "prisma"
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  firstName String   @db.VarChar(30)
+  lastName  String   @db.VarChar(30)
+  email     String   @unique(map: "User_email_idx") @db.VarChar(255)
+  profile   Profile?
+}
+
+model Profile {
+  id       Int    @id @default(autoincrement())
+  username String @unique(map: "Profile_username_idx") @db.VarChar(30)
+  userId   Int    @unique
+  User     User   @relation(fields: [userId], references: [id])
+  Post     Post[]
+}
+
+model Post {
+  id       Int      @id @default(autoincrement())
+  title    String   @db.VarChar(200)
+  content  String?  @db.LongText
+  authorId Int?
+  Profile  Profile? @relation(fields: [authorId], references: [id])
+
+  @@index([authorId], map: "Post_authorId_fkey")
+}

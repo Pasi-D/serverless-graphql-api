@@ -1,0 +1,10 @@
+# Node Modules
+/node_modules/*
+
+# Production build
+/dist/*
+
+# .vscode
+/.vscode/*
+
+webpack.config.js
